@@ -214,7 +214,7 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
         levelDropdown.AddOptions(maps);
         levelDropdown.SetValueWithoutNotify(Mathf.Clamp(index, 0, maps.Count - 1));
 
-        if (enabled) {
+        if (true){//enabled) {
             levelDropdown.AddOptions(debugMaps);
         }
         UpdateSettingEnableStates();
