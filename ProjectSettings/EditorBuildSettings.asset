@@ -44,4 +44,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/EditTest.unity
     guid: da991307a4ddbe74fa5d24246b1f8547
+  - enabled: 1
+    path: Assets/Scenes/Levels/EditedNight.unity
+    guid: ef2f29d387a42a544b1c3d26c5f8168e
   m_configObjects: {}
