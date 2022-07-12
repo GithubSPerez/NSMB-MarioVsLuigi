@@ -573,7 +573,13 @@ public class GameManager : MonoBehaviour, IOnEventCallback, IInRoomCallbacks, IC
             HandleMusic();
 
         if (PhotonNetwork.IsMasterClient) {
-            int players = PhotonNetwork.CurrentRoom.PlayerCount;
+            int players = 0;
+            foreach (var player in PhotonNetwork.CurrentRoom.Players) {
+                Utils.GetCustomProperty(Enums.NetPlayerProperties.Spectator, out bool spectating, player.Value.CustomProperties);
+                if (!spectating)
+                    players++;
+            }
+
             if (!loaded && loadedPlayers.Count >= players) {
                 RaiseEventOptions options = new() { CachingOption = EventCaching.AddToRoomCacheGlobal, Receivers = ReceiverGroup.All };
                 SendAndExecuteEvent(Enums.NetEventIds.AllFinishedLoading, PhotonNetwork.ServerTimestamp + ((players-1) * 250) + 1000, SendOptions.SendReliable, options);
@@ -654,16 +660,13 @@ public class GameManager : MonoBehaviour, IOnEventCallback, IInRoomCallbacks, IC
         }
         //TIMED CHECKS
         if (timeUp) {
-            bool draw = false;
-            Utils.GetCustomProperty(Enums.NetRoomProperties.DrawTime, out draw);
+            Utils.GetCustomProperty(Enums.NetRoomProperties.DrawTime, out bool draw);
             //time up! check who has most stars, if a tie keep playing, if draw is on end game in a draw
-            if (!draw)
-                    // it's a draw! Thanks for playing the demo!
-                    PhotonNetwork.RaiseEvent((byte) Enums.NetEventIds.EndGame, winningPlayers[0].photonView.Owner, NetworkUtils.EventAll, SendOptions.SendReliable);
-            else {
-                if (winningPlayers.Count == 1)
-                    PhotonNetwork.RaiseEvent((byte) Enums.NetEventIds.EndGame, null, NetworkUtils.EventAll, SendOptions.SendReliable);
-            }
+            if (draw)
+                // it's a draw! Thanks for playing the demo!
+                PhotonNetwork.RaiseEvent((byte) Enums.NetEventIds.EndGame, null, NetworkUtils.EventAll, SendOptions.SendReliable);
+            else if (winningPlayers.Count == 1)
+                PhotonNetwork.RaiseEvent((byte) Enums.NetEventIds.EndGame, winningPlayers[0].photonView.Owner, NetworkUtils.EventAll, SendOptions.SendReliable);
 
             return;
         }
