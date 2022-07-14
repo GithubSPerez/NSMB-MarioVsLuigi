@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Edited85.unity
     guid: 88667e7409cb0ca48818246c7b7322da
+  - enabled: 1
+    path: Assets/Scenes/Levels/EditedMcChomk.unity
+    guid: cdb5633e75c252a47b063127061b773f
   m_configObjects: {}
