@@ -13,8 +13,7 @@ public class GenericMover : MonoBehaviour {
 
     public AudioSource sfx;
 
-    public List<AudioClip> sound_list;
-    public List<float> soundTime_list;
+    public List<SoundMoment> sounds;
     //private List<bool> sound_executed = new List<bool> {false, false, false, false, false};
 
     private Vector3? origin = null;
@@ -42,13 +41,13 @@ public class GenericMover : MonoBehaviour {
         time %= 1.0;
         print(time);
 
-        for (int i = 0; i < sound_list.Count; i ++)
+        for (int i = 0; i < sounds.Count; i ++)
         {
-            float st = soundTime_list[i];
-            if (time >= st && lastTime < st)
+            SoundMoment s = sounds[i];
+            if (time >= s.soundTime && lastTime < s.soundTime)
             {
                 //photonView.RPC("PlaySound", RpcTarget.All, sound_list[i]);
-                sfx.PlayOneShot(sound_list[i], 2);
+                sfx.PlayOneShot(s.soundClip, 2);
             }
         }
 
