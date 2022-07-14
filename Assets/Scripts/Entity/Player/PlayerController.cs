@@ -1635,6 +1635,9 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
             if (pipe.miniOnly && state != Enums.PowerupState.MiniMushroom)
                 continue;
 
+            if (!pipe.entryAllowed)
+                continue;
+
             //Enter pipe
             pipeEntering = pipe;
             pipeDirection = Vector2.down;

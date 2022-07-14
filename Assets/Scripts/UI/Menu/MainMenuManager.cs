@@ -780,6 +780,7 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
     }
     public void ChangeLevel(int index) {
         levelDropdown.SetValueWithoutNotify(index);
+        if (index > maps.Count) index = 0;
         Camera.main.transform.position = levelCameraPositions[index].transform.position;
     }
     public void SetLevelIndex() {
