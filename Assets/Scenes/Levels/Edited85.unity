@@ -523,9 +523,11 @@ MonoBehaviour:
     m_PostInfinity: 1
     m_RotationOrder: 4
   animationTimeSeconds: 8
-  sfx: {fileID: 0}
-  sound_list: []
-  soundTime_list: []
+  sfx: {fileID: 1581864109}
+  sound_list:
+  - {fileID: 8300000, guid: 5b37bd296278e534a9d438cbf66937ca, type: 3}
+  soundTime_list:
+  - 0.482
 --- !u!66 &61975767
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -4174,8 +4176,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5500062339093502114, guid: 43d56bd18d06e9b4abe323618a20a228,
         type: 3}
+      propertyPath: spawnBigPowerups
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500062339093502114, guid: 43d56bd18d06e9b4abe323618a20a228,
+        type: 3}
       propertyPath: playersToVisualize
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500062339093502114, guid: 43d56bd18d06e9b4abe323618a20a228,
+        type: 3}
+      propertyPath: spawnVerticalPowerups
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5500062339093502118, guid: 43d56bd18d06e9b4abe323618a20a228,
         type: 3}
@@ -4769,9 +4781,9 @@ MonoBehaviour:
   animationTimeSeconds: 10
   sfx: {fileID: 1581864109}
   sound_list:
-  - {fileID: 8300000, guid: 84e9088d7e4ac7c4ca2280514ff715ce, type: 3}
+  - {fileID: 8300000, guid: 5b37bd296278e534a9d438cbf66937ca, type: 3}
   soundTime_list:
-  - 0.5
+  - 0.482
 --- !u!66 &726052284
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -17158,7 +17170,7 @@ Tilemap:
       - {fileID: -1810485609, guid: 3dc74daeed1e76646809cd2e46759fd9, type: 3}
       - {fileID: -509910979, guid: 3dc74daeed1e76646809cd2e46759fd9, type: 3}
       - {fileID: -86163960, guid: 3dc74daeed1e76646809cd2e46759fd9, type: 3}
-      m_AnimationSpeed: 6
+      m_AnimationSpeed: 6.0000005
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: -21, y: -6, z: 0}

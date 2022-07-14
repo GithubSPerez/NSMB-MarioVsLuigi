@@ -40,6 +40,7 @@ public class GenericMover : MonoBehaviour {
         double time = timestamp - (start / (double) 1000);
         time /= animationTimeSeconds;
         time %= 1.0;
+        print(time);
 
         for (int i = 0; i < sound_list.Count; i ++)
         {
@@ -47,7 +48,7 @@ public class GenericMover : MonoBehaviour {
             if (time >= st && lastTime < st)
             {
                 //photonView.RPC("PlaySound", RpcTarget.All, sound_list[i]);
-                sfx.PlayOneShot(sound_list[i]);
+                sfx.PlayOneShot(sound_list[i], 2);
             }
         }
 
