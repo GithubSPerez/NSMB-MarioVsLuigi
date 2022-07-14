@@ -9,7 +9,10 @@ public class EStageLoader : MonoBehaviour
 {
     //public static MainMenuManager Instance;
     public TMP_Dropdown levelDropdown;
-    public List<string> editedStages = new List<string> {"(E) Nightland", "(E) Mario 85"};
+    public List<string> editedStages = new List<string> {
+        "(E) Nightland",
+        "(E) Mario 85",
+    };
     //bool addedToList = false;
     // Start is called before the first frame update
     
