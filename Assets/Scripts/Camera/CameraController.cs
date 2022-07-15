@@ -88,8 +88,29 @@ public class CameraController : MonoBehaviour {
                 BackgroundLoop.instance.wrap = true;
         }
 
+        
+
         if (xDifference > 0.25f)
             currentPosition.x += (0.25f - xDifference - 0.01f) * (right ? 1 : -1);
+        
+        if (GameManager.Instance.levelVerticalLoop)
+        {
+            float yDifference = Vector2.Distance(Vector2.up * currentPosition.y, Vector2.up * playerPos.y);
+            bool upwards = currentPosition.y > playerPos.y;
+            //print(yDifference);
+
+            if (yDifference >= 1) {
+                print("YOOOOO");
+                currentPosition.y += (upwards ? -1 : 1) * GameManager.Instance.levelHeightTile / 2f;
+                yDifference = Vector2.Distance(Vector2.up * currentPosition.y, Vector2.up * playerPos.y);
+                upwards = currentPosition.y > playerPos.y;
+                if (controlCamera)
+                    BackgroundLoop.instance.wrap = true;
+            }
+
+            if (yDifference > 0.25f)
+                currentPosition.y += (0.25f - yDifference - 0.01f) * (upwards ? 1 : -1);
+        }
 
         // lagging camera movements
         Vector3 targetPosition = currentPosition;
