@@ -12,7 +12,8 @@ public class EStageLoader : MonoBehaviour
     private List<string> editedStages = new List<string> {
         "(E) Nightland",
         "(E) Mario 85",
-        "(E) McChomk Land"
+        "(E) McChomk Land",
+        "(Test) VLoop"
     };
     //bool addedToList = false;
     // Start is called before the first frame update
