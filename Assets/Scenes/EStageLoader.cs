@@ -13,7 +13,7 @@ public class EStageLoader : MonoBehaviour
         "(E) Nightland",
         "(E) Mario 85",
         "(E) McChomk Land",
-        "(Test) VLoop"
+        "(E) Tower"
     };
     //bool addedToList = false;
     // Start is called before the first frame update
