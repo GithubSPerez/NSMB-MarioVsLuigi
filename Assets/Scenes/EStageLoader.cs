@@ -9,7 +9,7 @@ public class EStageLoader : MonoBehaviour
 {
     //public static MainMenuManager Instance;
     public TMP_Dropdown levelDropdown;
-    public List<string> editedStages = new List<string> {
+    private List<string> editedStages = new List<string> {
         "(E) Nightland",
         "(E) Mario 85",
     };
