@@ -7,7 +7,7 @@ public class KillplaneKill : MonoBehaviourPun {
     [SerializeField] float killTime = 0f;
     private float timer = 0;
     void Update() {
-        if (transform.position.y >= GameManager.Instance.GetLevelMinY()) 
+        if (transform.position.y >= GameManager.Instance.GetLevelMinY() || GameManager.Instance.levelVerticalLoop) 
             return;
         timer += Time.deltaTime;
         if (timer < killTime)
@@ -22,3 +22,4 @@ public class KillplaneKill : MonoBehaviourPun {
         }
     }
 }
+// BIUS!!!!!!!!!!!!

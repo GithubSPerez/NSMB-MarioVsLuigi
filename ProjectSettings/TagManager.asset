@@ -32,6 +32,8 @@ TagManager:
   - lava
   - MarioBrosPlatform
   - frozencube
+  - Squishy
+  - EnemySpawn
   layers:
   - Default
   - TransparentFX
@@ -50,7 +52,7 @@ TagManager:
   - IceBlock
   - LooseCoin
   - 
-  - 
+  - Spawners
   - 
   - 
   - 

@@ -5,9 +5,13 @@ using UnityEngine;
 public class WrappingHitbox : MonoBehaviour {
     
     private Rigidbody2D body;
-    private BoxCollider2D[] ourColliders, childColliders;
+    private BoxCollider2D[] ourColliders, childColliders, vertColliders, cornerColliders;
     private float levelMiddle, levelWidth;
-    private Vector2 offset = Vector2.zero;
+    private bool levelVertLoop = false;
+    private float levelYMiddle, levelHeight;
+    private Vector2 xOffset, yOffset;
+    private Vector2 fullOffset = Vector2.zero;
+
     void Awake() {
         body = GetComponent<Rigidbody2D>();
         if (!body)
@@ -22,32 +26,68 @@ public class WrappingHitbox : MonoBehaviour {
             enabled = false;
             return;
         }
-        
-        if (offset == Vector2.zero) {
+
+
+        if (fullOffset == Vector2.zero) {
+            levelVertLoop = GameManager.Instance.levelVerticalLoop;
+
             childColliders = new BoxCollider2D[ourColliders.Length];
+            vertColliders = new BoxCollider2D[ourColliders.Length];
+            cornerColliders = new BoxCollider2D[ourColliders.Length];
+
             for (int i = 0; i < ourColliders.Length; i++)
+            {
                 childColliders[i] = gameObject.AddComponent<BoxCollider2D>();
+                if (levelVertLoop)
+                {
+                    vertColliders[i] = gameObject.AddComponent<BoxCollider2D>();
+                    cornerColliders[i] = gameObject.AddComponent<BoxCollider2D>();
+                }
+            }
+
             levelWidth = GameManager.Instance.levelWidthTile/2f;
             levelMiddle = GameManager.Instance.GetLevelMinX() + levelWidth/2f;
-            offset = new Vector2(levelWidth, 0);
+
+            levelHeight = GameManager.Instance.levelHeightTile / 2f;
+            levelYMiddle = GameManager.Instance.GetLevelMinY() + levelHeight / 2f;
+
+            xOffset = new Vector2(levelWidth, 0);
+            yOffset = new Vector2(0, levelHeight);
+            fullOffset = xOffset + yOffset;
         }
 
         for (int i = 0; i < ourColliders.Length; i++)
+        {
             UpdateChildColliders(i);
+        }
     }
     
     void UpdateChildColliders(int index) {
         BoxCollider2D ourCollider = ourColliders[index];
-        BoxCollider2D childCollider = childColliders[index];
+        BoxCollider2D[] colliders = new BoxCollider2D[3];
 
-        childCollider.autoTiling = ourCollider.autoTiling;
-        childCollider.edgeRadius = ourCollider.edgeRadius;
-        childCollider.enabled = ourCollider.enabled;
-        childCollider.isTrigger = ourCollider.isTrigger;
-        childCollider.offset = ourCollider.offset + (((body.position.x < levelMiddle) ? offset : -offset) / body.transform.lossyScale);
-        childCollider.sharedMaterial = ourCollider.sharedMaterial;
-        childCollider.size = ourCollider.size;
-        childCollider.usedByComposite = ourCollider.usedByComposite;
-        childCollider.usedByEffector = ourCollider.usedByComposite;
+        colliders[0] = childColliders[index];
+        if (levelVertLoop)
+        {
+            colliders[1] = vertColliders[index];
+            colliders[2] = cornerColliders[index];
+        }
+
+        for (int j = 0; j < (levelVertLoop ? 3 : 1); j ++)
+        {
+            BoxCollider2D coll = colliders[j];
+            coll.autoTiling = ourCollider.autoTiling;
+            coll.edgeRadius = ourCollider.edgeRadius;
+            coll.enabled = ourCollider.enabled;
+            coll.isTrigger = ourCollider.isTrigger;
+            coll.sharedMaterial = ourCollider.sharedMaterial;
+            coll.size = ourCollider.size;
+            coll.usedByComposite = ourCollider.usedByComposite;
+            coll.usedByEffector = ourCollider.usedByComposite;
+
+            coll.offset = ourCollider.offset;
+            if (j == 0 || j == 2) coll.offset += (((body.position.x < levelMiddle) ? xOffset : -xOffset) / body.transform.lossyScale);
+            if (j == 1 || j == 2) coll.offset += (((body.position.y < levelYMiddle) ? yOffset : -yOffset) / body.transform.lossyScale);
+        }
     }
 }

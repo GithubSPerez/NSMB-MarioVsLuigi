@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour, IOnEventCallback, IInRoomCallbacks, IC
 
     public int levelMinTileX, levelMinTileY, levelWidthTile, levelHeightTile;
     public float cameraMinY, cameraHeightY, cameraMinX = -1000, cameraMaxX = 1000;
+    public bool levelVerticalLoop = false;
     public bool loopingLevel = true;
     public Vector3 spawnpoint;
     public Tilemap tilemap;
@@ -848,6 +849,30 @@ public class GameManager : MonoBehaviour, IOnEventCallback, IInRoomCallbacks, IC
         foreach (GameObject starSpawn in GameObject.FindGameObjectsWithTag("StarSpawn")) {
             Gizmos.DrawCube(starSpawn.transform.position, Vector3.one);
             Gizmos.DrawIcon(starSpawn.transform.position, "star", true, new Color(1, 1, 1, 0.5f));
+        }
+
+        Gizmos.color = new Color(1, 0, 0, 0.2f);
+        foreach (GameObject enemySpawn in GameObject.FindGameObjectsWithTag("EnemySpawn")) {
+            Gizmos.DrawCube(enemySpawn.transform.position + new Vector3(0, 0.3f, 0), new Vector3(0.55f, 0.55f, 0));
+
+            EnemySpawnpoint enComp = enemySpawn.GetComponent<EnemySpawnpoint>();
+
+            Gizmos.DrawIcon(enemySpawn.transform.position + new Vector3(0, 0.25f, 0), "enemySpawn", true, new Color(1, 1, 1, 0.5f));
+            /*
+            if (enComp != null)
+            {
+                string prefabName = enComp.prefab;
+                GameObject enemInst = Instantiate( Resources.Load(prefabName) ) as GameObject;
+                SpriteRenderer enemySR = enemInst.GetComponent<SpriteRenderer>();
+                DestroyImmediate(enemInst);
+                
+                Gizmos.DrawIcon(enemySpawn.transform.position, "enemySpawn", true, new Color(1, 1, 1, 0.5f));
+            }
+            else
+            {
+                
+            }
+            */
         }
     }
 

@@ -5,7 +5,18 @@ public class EnemySpawnpoint : MonoBehaviour {
 
     public string prefab;
     public GameObject currentEntity;
+    /*
+    public void Start() {
+        GameObject go = new GameObject("Preview");
+        SpriteRenderer renderer = go.AddComponent<SpriteRenderer>();
+        SpriteRenderer enemySR = Resources.Load(prefab).getComponent<SpriteRenderer>();
 
+        if (enemySR != null)
+        {
+            renderer.sprite = enemySR.sprite;
+        }
+    }
+    */
     public virtual bool AttemptSpawning() {
         if (currentEntity)
             return false;

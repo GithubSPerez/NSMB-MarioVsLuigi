@@ -1635,6 +1635,9 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
             if (pipe.miniOnly && state != Enums.PowerupState.MiniMushroom)
                 continue;
 
+            if (!pipe.entryAllowed)
+                continue;
+
             //Enter pipe
             pipeEntering = pipe;
             pipeDirection = Vector2.down;
@@ -2137,9 +2140,10 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
 
         if (dead || !spawned)
             return;
-
-        if (photonView.IsMine && body.position.y + transform.lossyScale.y < GameManager.Instance.GetLevelMinY()) {
-            //death via pit
+        
+        //death via pit
+        bool belowTheLevel = (!GameManager.Instance.levelVerticalLoop && body.position.y + transform.lossyScale.y < GameManager.Instance.GetLevelMinY());
+        if (belowTheLevel && photonView.IsMine) {
             photonView.RPC("Death", RpcTarget.All, true, false);
             return;
         }

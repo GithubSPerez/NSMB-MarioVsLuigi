@@ -43,6 +43,17 @@ public class Utils {
             location.x -= manager.levelWidthTile / 2;
             return true;
         }
+
+        if (manager.levelVerticalLoop)
+        {
+            if (location.y < manager.GetLevelMinY()) {
+            location.y += manager.levelHeightTile / 2;
+            return true;
+            } else if (location.y >= manager.GetLevelMaxY()) {
+                location.y -= manager.levelHeightTile / 2;
+                return true;
+            }
+        }
         return false;
     }
 
