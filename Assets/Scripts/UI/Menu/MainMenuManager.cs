@@ -219,7 +219,7 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
         levelDropdown.AddOptions(maps);
         levelDropdown.SetValueWithoutNotify(Mathf.Clamp(index, 0, maps.Count - 1));
 
-        if (enabled) {
+        if (true) {
             levelDropdown.AddOptions(debugMaps);
         } else if (PhotonNetwork.IsMasterClient) {
             Utils.GetCustomProperty(Enums.NetRoomProperties.Level, out int level);
@@ -383,8 +383,11 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
 
         /*
          * dear god this needs a refactor. does every UI element seriously have to have
-         * their callbacks into this one fuckin script?
+         * their callbacks into this one fuckin script? 
+         * xdddddddd -sebap
          */
+        EStageLoader ESL = gameObject.AddComponent<EStageLoader>() as EStageLoader;
+        ESL.levelDropdown = levelDropdown;
 
         Instance = this;
 
@@ -786,6 +789,8 @@ public class MainMenuManager : MonoBehaviour, ILobbyCallbacks, IInRoomCallbacks,
     }
     public void ChangeLevel(int index) {
         levelDropdown.SetValueWithoutNotify(index);
+        if (index >= levelCameraPositions.Count())
+            index = 0;
         Camera.main.transform.position = levelCameraPositions[index].transform.position;
     }
     public void SetLevelIndex() {
