@@ -118,11 +118,13 @@ public class CameraController : MonoBehaviour {
         if (controller.onGround)
             lastFloor = playerPos.y;
         bool validFloor = controller.onGround || lastFloor < playerPos.y;
-
-        //top camera clip ON GROUND. slowly pan up, dont do it instantly.
-        if (validFloor && lastFloor - (currentPosition.y + vOrtho) + cameraTopMax + 2f > 0)
-            targetPosition.y = playerPos.y - vOrtho + cameraTopMax + 2f;
-
+        
+        if (!GameManager.Instance.levelVerticalLoop)
+        {
+            //top camera clip ON GROUND. slowly pan up, dont do it instantly.
+            if (validFloor && lastFloor - (currentPosition.y + vOrtho) + cameraTopMax + 2f > 0)
+                targetPosition.y = playerPos.y - vOrtho + cameraTopMax + 2f;
+        }
 
         // Smoothing
 
