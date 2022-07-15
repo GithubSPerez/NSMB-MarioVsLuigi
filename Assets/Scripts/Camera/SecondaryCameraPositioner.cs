@@ -7,7 +7,7 @@ public class SecondaryCameraPositioner : MonoBehaviour {
     bool destroyed = false;
     private int corner = -1;
 
-    private GameObject[] otherCam;
+    private GameObject[] otherCam = new GameObject[2];
 
     public void UpdatePosition() {
         
@@ -20,7 +20,6 @@ public class SecondaryCameraPositioner : MonoBehaviour {
             }
             else
             {
-                otherCam = new GameObject[2];
                 for (int i = 0; i < 2; i ++)
                 {
                     otherCam[i] = Instantiate(gameObject, Camera.main.transform.Find("BaseCamera"));
