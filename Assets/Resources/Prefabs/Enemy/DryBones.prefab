@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7523289063499453456}
-  - component: {fileID: 7523289063499453453}
+  - component: {fileID: -8259815577809721044}
   - component: {fileID: 7523289063499453457}
   - component: {fileID: 7523289063499453455}
   - component: {fileID: 7523289063499453452}
@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: -3964062451811810513}
   m_Layer: 9
   m_Name: DryBones
-  m_TagString: goomba
+  m_TagString: koopa
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -46,7 +46,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7523289063499453453
+--- !u!114 &-8259815577809721044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7523289063499453450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f5b530d04bdafb4b866d48e39e4d5e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d4d4768c9f2d594eaebbc2d0e5b800a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dead: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   flying: 0
   body: {fileID: 0}
   hitbox: {fileID: 0}
-  speed: 0.875
+  speed: 1
   deathTimer: -1
   terminalVelocity: -8
 --- !u!212 &7523289063499453457
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3edc42bf1d8e50d4c8b3a0a0524a1122, type: 2}
+  - {fileID: 2100000, guid: 2042d3bb686a40c4b9e3b7319928b041, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109,16 +109,16 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 866314226, guid: 2841a2b05315ef8459ad1e99f93f12ae, type: 3}
+  m_Sprite: {fileID: -1560851280, guid: 410c5a12b6e26c34585b4d1dfad21dfd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.22, y: 0.06}
+  m_Size: {x: 0.42, y: 0.45}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
   m_SpriteSortPoint: 0
 --- !u!50 &7523289063499453455
 Rigidbody2D:
@@ -154,18 +154,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.05934386}
+  m_Offset: {x: 0, y: 0.1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.2}
     oldSize: {x: 0.42, y: 0.45}
-    newSize: {x: 0.22, y: 0.06}
+    newSize: {x: 0.42, y: 0.45}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.10131228}
+  m_Size: {x: 0.15, y: 0.2}
   m_EdgeRadius: 0
 --- !u!95 &7523289063499453454
 Animator:

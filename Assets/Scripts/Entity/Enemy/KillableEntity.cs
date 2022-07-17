@@ -156,4 +156,10 @@ public abstract class KillableEntity : MonoBehaviourPun, IFreezableEntity {
     public void PlaySound(Enums.Sounds sound) {
         audioSource.PlayOneShot(sound.GetClip());
     }
+    public void PlayClip(string soundString)
+    {
+        AudioClip sound = Resources.Load("Sound/" + soundString) as AudioClip;
+        audioSource.Stop();
+        audioSource.PlayOneShot(sound);
+    }
 }
