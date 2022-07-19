@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
     public bool dead = false, spawned = false;
     public Enums.PowerupState state = Enums.PowerupState.Small, previousState;
     public float slowriseGravity = 0.85f, normalGravity = 2.5f, flyingGravity = 0.8f, flyingTerminalVelocity = 1.25f, drillVelocity = 7f, groundpoundTime = 0.25f, groundpoundVelocity = 10, blinkingSpeed = 0.25f, terminalVelocity = -7f, jumpVelocity = 6.25f, megaJumpVelocity = 16f, launchVelocity = 12f, walkingAcceleration = 8f, runningAcceleration = 3f, walkingMaxSpeed = 2.7f, runningMaxSpeed = 5, wallslideSpeed = -4.25f, walljumpVelocity = 5.6f, giantStartTime = 1.5f, soundRange = 10f, slopeSlidingAngle = 12.5f, pickupTime = 0.5f;
-    public float propellerLaunchVelocity = 6, propellerFallSpeed = 2, propellerSpinFallSpeed = 1.5f, propellerSpinTime = 0.75f, propellerDrillBuffer;
+    public float propellerLaunchVelocity = 6, propellerFallSpeed = 2, propellerSpinFallSpeed = 1.5f, propellerSpinTime = 0.75f, propellerDrillBuffer, heightSmallModel = 0.42f, heightLargeModel = 0.82f;
 
     BoxCollider2D[] hitboxes;
     GameObject models;
@@ -293,6 +293,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
             TickCounters();
             HandleMovement(Time.fixedDeltaTime);
             HandleGiantTiles(true);
+            UpdateHitbox();
         }
         if (holding && holding.dead)
             holding = null;
@@ -1640,7 +1641,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
                 continue;
             if (!pipe.entryAllowed)
                 continue;
-                
+
             //Enter pipe
             pipeEntering = pipe;
             pipeDirection = Vector2.down;
@@ -1720,7 +1721,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
         bool triggerState = Physics2D.queriesHitTriggers;
         Physics2D.queriesHitTriggers = false;
 
-        float uncrouchHeight = AnimationController.GetHitboxSize(false).y * transform.lossyScale.y;
+        float uncrouchHeight = GetHitboxSize(false).y * transform.lossyScale.y;
 
         bool ret = Physics2D.BoxCast(body.position + Vector2.up * 0.1f, new(width - 0.05f, 0.05f), 0, Vector2.up, uncrouchHeight - 0.1f, Layers.MaskOnlyGround);
 
@@ -1916,6 +1917,30 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
         }
     }
 
+
+    public void UpdateHitbox() {
+        bool crouchHitbox = state != Enums.PowerupState.MiniMushroom && pipeEntering == null && ((crouching && !groundpound) || inShell || sliding);
+        Vector2 hitbox = GetHitboxSize(crouchHitbox);
+
+        MainHitbox.size = hitbox;
+        MainHitbox.offset = Vector2.up * 0.5f * hitbox;
+    }
+
+    public Vector2 GetHitboxSize(bool crouching) {
+        float height;
+
+        if (state <= Enums.PowerupState.Small || (invincible > 0 && !onGround && !crouching && !sliding && !flying && !propeller) || groundpound) {
+            height = heightSmallModel;
+        } else {
+            height = heightLargeModel;
+        }
+
+        if (crouching)
+            height *= state <= Enums.PowerupState.Small ? 0.7f : 0.5f;
+
+        return new(MainHitbox.size.x, height);
+    }
+
     void HandleWalkingRunning(bool left, bool right) {
         if (groundpound || groundpoundCounter > 0 || sliding || knockback || pipeEntering || jumpLandingTimer > 0 || !(wallJumpTimer <= 0 || onGround || body.velocity.y < 0))
             return;
@@ -2021,9 +2046,13 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
 
         if (!alreadyStuckInBlock) {
             // Code for mario to instantly teleport to the closest free position when he gets stuck
-            
+
+            //prevent mario from clipping to the floor if we got pushed in via our hitbox changing (shell on ice, for example)
+            transform.position = body.position = previousFramePosition;
+            checkPos = transform.position + (Vector3) (Vector2.up * checkSize / 2f);
+
             float distanceInterval = 0.025f;
-            float minimDistance = 1000;
+            float minimDistance = 0.95f; // if the minimum actual distance is anything above this value this code will have no effect
             float travelDistance = 0;
             float targetInd = -1; // Basically represents the index of the interval that'll be chosen for mario to be popped out
             int angleInterval = 45;
@@ -2054,7 +2083,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
                     }
                 }
             }
-            
+
             // Move him
             if (targetInd != -1) {
                 float radAngle = Mathf.PI * (targetInd * angleInterval) / 180;
